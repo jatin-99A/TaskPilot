@@ -5,6 +5,6 @@ export interface TodoDataType {
     date: Date | "",
     difficulty: "easy" | "medium" | "hard",
     priority: "high" | "low" | "moderate",
-    category: "work"| "personal"| "urgent",
-    
-} 
+    category: "work" | "personal"| "urgent",
+    state: "pending" | "in-progress" | "completed",
+}
