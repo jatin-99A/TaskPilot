@@ -8,3 +8,7 @@ export interface TodoDataType {
     category: "work" | "personal"| "urgent",
     state: "pending" | "in-progress" | "completed",
 }
+
+export interface ResponseType {
+    success: boolean
+}

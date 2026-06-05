@@ -4,11 +4,24 @@ import type { TodoDataType } from "../type";
 const AddTodoForm = () => {
     const [data, setData] = React.useState<TodoDataType | null>(null);
 
+    // Handling form submission
+    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TodoDataType;
+
+        if (!Object.values(data).every(value => value !== "") || !data.category || !data.priority || !data.difficulty ) {
+            alert("All fields are required. Please fill all the fields before submitting");
+            return;
+        }
+
+        console.log(data)
+    }
+
+
     const inputClass = "w-full px-3 py-2 rounded-md border border-yellow-400/40 bg-yellow-50/30 text-yellow-900 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400";
 
-
     return (
-        <form className="w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
+        <form onSubmit={(e) => handleSubmit(e)} className="w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
             <h1 className="text-3xl font-bold">Register Todo</h1>
 
             {/* Title */}
@@ -85,7 +98,7 @@ const AddTodoForm = () => {
                     </div>
                 </div>
 
-                <button className="p-2.5 bg-yellow-400 rounded-lg text-white font-bold hover:bg-yellow-300 transition-all duration-75 cursor-pointer">Add Todo</button>
+                <button type="submit" className="p-2.5 bg-yellow-400 rounded-lg text-white font-bold hover:bg-yellow-300 transition-all duration-75 cursor-pointer">Add Todo</button>
 
             </div>
         </form>
