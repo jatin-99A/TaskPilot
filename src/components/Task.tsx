@@ -4,7 +4,8 @@ import type { TodoDataType } from "../type"
 
 const Task = ({ title, description, difficulty, priority, category, date }: Pick<TodoDataType, "title" | "difficulty" | "priority" | "description" | "category" | "date">) => {
 
-    date = date.toLocaleString() as unknown as Date;
+    // console.log(new Date(date).getTime())
+    date = new Date(date).toLocaleString() as unknown as Date;
     title = title.toUpperCase();
 
     return (
@@ -23,7 +24,7 @@ const Task = ({ title, description, difficulty, priority, category, date }: Pick
                 <h3 className="font-medium text-[14px] text-yellow-600 p-1 rounded-lg bg-yellow-400/20 mt-1">Category : <span className="font-normal">{category}</span></h3>
             </div>
 
-            <p>{date as unknown as string}</p>
+            <p className="m-1">{date as unknown as string}</p>
 
         </div>
     )

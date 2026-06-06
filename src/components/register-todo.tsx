@@ -1,9 +1,13 @@
 import * as React from "react"
 import type { TodoDataType } from "../type";
 import { useAddTodo } from "../hooks/use-add-todo";
+import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
+import { X } from "lucide-react";
 
 const AddTodoForm = () => {
     const { addTodo } = useAddTodo();
+    const { setIsPopUpContainerOpen } = React.useContext(PopUpContainerContext);
+
 
     // Handling form submission
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>): void => {
@@ -14,16 +18,20 @@ const AddTodoForm = () => {
             alert("All fields are required. Please fill all the fields before submitting");
             return;
         }
-        addTodo(data)
-        alert("Todo added successfully.");
+        setIsPopUpContainerOpen(false);
+        setTimeout(() => {
+            alert("Todo added successfully.");
+        }, 200);
+        addTodo(data);
     }
 
 
     const inputClass = "w-full px-3 py-2 rounded-md border border-yellow-400/40 bg-yellow-50/30 text-yellow-900 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400";
 
     return (
-        <form onSubmit={handleSubmit} className="w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
+        <form onSubmit={handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
             <h1 className="text-3xl font-bold">Register Todo</h1>
+            <X className="absolute right-4 top-4 text-red-500 cursor-pointer" onClick={() => setIsPopUpContainerOpen(false)} />
 
             {/* Title */}
             <input className={inputClass} type="text" placeholder="title" name="title" />
