@@ -1,14 +1,11 @@
 export interface TodoDataType {
     
     title: string,
+    id: string,
     description: string,
-    date: Date | "",
+    date: Date,
     difficulty: "easy" | "medium" | "hard",
     priority: "high" | "low" | "moderate",
     category: "work" | "personal"| "urgent",
     state: "pending" | "in-progress" | "completed",
-}
-
-export interface ResponseType {
-    success: boolean
 }

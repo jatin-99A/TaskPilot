@@ -1,27 +1,28 @@
 import * as React from "react"
 import type { TodoDataType } from "../type";
+import { useAddTodo } from "../hooks/use-add-todo";
 
 const AddTodoForm = () => {
-    const [data, setData] = React.useState<TodoDataType | null>(null);
+    const { addTodo } = useAddTodo();
 
     // Handling form submission
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TodoDataType;
 
-        if (!Object.values(data).every(value => value !== "") || !data.category || !data.priority || !data.difficulty ) {
+        if (!Object.values(data).every(value => value !== "") || !data.category || !data.priority || !data.difficulty) {
             alert("All fields are required. Please fill all the fields before submitting");
             return;
         }
-
-        console.log(data)
+        addTodo(data)
+        alert("Todo added successfully.");
     }
 
 
     const inputClass = "w-full px-3 py-2 rounded-md border border-yellow-400/40 bg-yellow-50/30 text-yellow-900 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400";
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)} className="w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
+        <form onSubmit={handleSubmit} className="w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
             <h1 className="text-3xl font-bold">Register Todo</h1>
 
             {/* Title */}
@@ -33,9 +34,9 @@ const AddTodoForm = () => {
             {/* Date and Time */}
             <input className={inputClass + " w-full"} type="datetime-local" id="date" name="date" />
 
-            {/* Difficulty */}
             <div className="w-full flex flex-col gap-4">
 
+                {/* Difficulty */}
                 <div>
                     <p className="font-semibold mb-2 text-yellow-400">Difficulty</p>
                     <div className="flex justify-around text-yellow-400 p-2  rounded-md border border-yellow-400/40 bg-yellow-50/30 ">

@@ -1,12 +1,14 @@
-import PopUpContainer from "./components/PopUpContainer"
-import Todo from "./components/Todo"
-import AddTodoForm from "./components/AddTodoForm"
+import PopUpContainer from "./components/pop-up-container"
+import Todo from "./components/todo-container"
+import AddTodoForm from "./components/register-todo"
 import * as React from "react"
 import { Plus } from "lucide-react"
+import { useGetTodo } from "./hooks/use-get-todo"
 
 
 const App = () => {
   const [isPopUpContainerOpen, setIsPopUpContainerOpen] = React.useState<boolean>(false);
+  useGetTodo();
 
   return (
     <div className="relative h-full w-full bg-linear-to-r from-slate-950 to-slate-900 p-3.5">
