@@ -18,7 +18,7 @@ const App = () => {
       <div className="h-40 w-40 shadow-[0_0_700px_200px_rgba(236,72,153,0.18)] fixed bottom-0 left-1/2 translate-y-full "></div>
       <h1 className="text-5xl font-bold text-white text-left m-3.5 -mb-3.5">TaskPilot</h1>
       <div className="flex justify-end px-4" >
-        <div className="p-2 w-fit rounded-full border border-sky-400 cursor-pointer hover:bg-sky-400/20 transition-all duration-75" onClick={() => setIsPopUpContainerOpen(true)}>
+        <div className="p-2 w-fit rounded-full border-2 border-sky-400 cursor-pointer hover:bg-sky-400/20 transition-all duration-75" onClick={() => setIsPopUpContainerOpen(true)}>
           <Plus className="text-sky-400" />
         </div>
       </div>
