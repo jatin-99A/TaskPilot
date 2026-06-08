@@ -3,14 +3,16 @@ import type { TodoDataType } from "../type";
 import { useAddTodo } from "../hooks/use-add-todo";
 import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
 import { X } from "lucide-react";
+import { useUpdateTodo } from "../hooks/use-update-todo";
 
-const AddTodoForm = () => {
+const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean, todoId?: string }) => {
     const { addTodo } = useAddTodo();
+    const { updateTodo } = useUpdateTodo();
     const { setIsPopUpContainerOpen } = React.useContext(PopUpContainerContext);
 
 
     // Handling form submission
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>): void => {
+    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TodoDataType;
 
@@ -23,6 +25,24 @@ const AddTodoForm = () => {
             alert("Todo added successfully.");
         }, 200);
         addTodo(data);
+        e.currentTarget.reset();
+    }
+
+    // Handling update form submission
+    const handleUpdateFormSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TodoDataType;
+
+        if (!Object.values(data).some(value => value !== "") || !data.category || !data.priority || !data.difficulty) {
+            alert("There must be at least one field");
+            return;
+        }
+        setIsPopUpContainerOpen(false);
+        setTimeout(() => {
+            alert("Todo updated successfully.");
+        }, 200);
+        updateTodo((todoId) as string, data);
+        e.currentTarget.reset();
     }
 
 
@@ -30,7 +50,7 @@ const AddTodoForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
-            <h1 className="text-3xl font-bold">Register Todo</h1>
+            <h1 className="text-3xl font-bold">{isUpdateForm ? "Update" : "Register"} Todo</h1>
             <X className="absolute right-4 top-4 text-red-500 cursor-pointer" onClick={() => setIsPopUpContainerOpen(false)} />
 
             {/* Title */}
@@ -107,7 +127,7 @@ const AddTodoForm = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="p-2.5 bg-yellow-400 rounded-lg text-white font-bold hover:bg-yellow-300 transition-all duration-75 cursor-pointer">Add Todo</button>
+                <button type="submit" className="p-2.5 bg-yellow-400 rounded-lg text-white font-bold hover:bg-yellow-300 transition-all duration-75 cursor-pointer">{isUpdateForm ? "Update" : "Add"} Todo</button>
 
             </div>
         </form>

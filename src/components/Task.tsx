@@ -9,13 +9,24 @@ const Task = ({ title, description, difficulty, priority, category, date, id }: 
     date = new Date(date).toLocaleString() as unknown as Date;
     title = title.toUpperCase();
 
+    // Handling deleting task
+    const handleDeleteTask = (e: React.MouseEvent<SVGSVGElement>) => {
+
+    }
+
+    // Handling update todo
+    const hanldeUpdateTodo = (e: React.MouseEvent<SVGSVGElement>) => {
+        const todoId = (e.currentTarget.closest("#task")?.lastChild as HTMLElement).id;
+        console.log(todoId);
+    }
+
     return (
         <div draggable id="task" className="w-full p-2.5 bg-[#BFBAA8] rounded-xl border border-white/60">
             <div className="flex justify-between">
                 <aside><h1 className={`font-medium`}>{title}</h1></aside>
                 <aside className="flex">
-                    <Pencil className="cursor-pointer hover:bg-black/10 p-1 rounded-md" />
-                    <Trash className="text-red-500 cursor-pointer hover:bg-red-500/10 p-1 rounded-md" />
+                    <Pencil onClick={hanldeUpdateTodo} className="cursor-pointer hover:bg-black/10 p-1 rounded-md" />
+                    <Trash onClick={handleDeleteTask} className="text-red-500 cursor-pointer hover:bg-red-500/10 p-1 rounded-md" />
                 </aside>
             </div>
             <p className="text-[14px] text-black/70 mt-2 leading-6">{description}</p>

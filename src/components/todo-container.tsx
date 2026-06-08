@@ -8,14 +8,36 @@ const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => 
   const { todo } = React.useContext(TodoContext);
   let filterTodos = todo !== null ? todo.filter(todo => todo.state === container_name) : [];
 
-  // Handling task drag functionality 
-  const handleTask = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.target as HTMLElement
-    const target = (e.target as HTMLElement).closest("#task");
+  // Handling drag over 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+
+    if (target.id === "todo-container" || target.id === "task") {
+      e.preventDefault();
+
+      if (target.id === "task") {
+        target.parentElement?.parentElement?.classList.add("!border-2", "!border-sky-400");
+      } else {
+        target.parentElement?.classList.add("!border-2", "!border-sky-400");
+      }
+    }
+  }
+
+  // Handling drag leave
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+
+    if (target.id === "todo-container" || target.id === "task") {
+      if (target.id === "task") {
+        target.parentElement?.parentElement?.classList.remove("!border-2", "!border-sky-400");
+      } else {
+        target.parentElement?.classList.remove("!border-2", "!border-sky-400");
+      }
+    }
   }
 
   return (
-    <div className="h-[75vh] w-[90vw] lg:w-[30vw] bg-white/5 backdrop-blur-xl rounded-xl flex flex-col border border-white/20 p-4 m-3">
+    <div onDragOver={handleDragOver} onDragLeave={handleDragLeave} className="h-[75vh] w-[90vw] lg:w-[30vw] bg-white/5 backdrop-blur-xl rounded-xl flex flex-col border border-white/20 p-4 m-3">
 
       <h1 className={`text-white text-[1.65rem] text-left mb-3 ml-2 font-semibold flex gap-1.5`}>
         {
@@ -30,7 +52,7 @@ const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => 
         {container_name}
       </h1>
 
-      <div onClick={handleTask} className="flex-1 p-1 flex flex-col gap-2 overflow-y-auto todo-container">
+      <div id="todo-container" className="flex-1 p-1 flex flex-col gap-2 overflow-y-auto todo-container">
         {filterTodos.map((task) => (
           <Task
             key={task.id}

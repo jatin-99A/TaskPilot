@@ -9,3 +9,5 @@ export interface TodoDataType {
     category: "work" | "personal"| "urgent",
     state: "pending" | "in-progress" | "completed",
 }
+
+export type AllowedUpdateTodoValues = Partial<Omit<TodoDataType, "id">>;
