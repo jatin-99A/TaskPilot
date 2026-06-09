@@ -6,6 +6,8 @@ import * as React from "react";
 
 const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => {
   const { todo } = React.useContext(TodoContext);
+  
+  // Filter todos in order of state
   let filterTodos = todo !== null ? todo.filter(todo => todo.state === container_name) : [];
 
   // Handling drag over 
@@ -37,7 +39,7 @@ const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => 
   }
 
   return (
-    <div onDragOver={handleDragOver} onDragLeave={handleDragLeave} className="h-[75vh] w-[90vw] lg:w-[30vw] bg-white/5 backdrop-blur-xl rounded-xl flex flex-col border border-white/20 p-4 m-3">
+    <div id="card" onDragOver={handleDragOver} onDragLeave={handleDragLeave} className="h-[75vh] w-[90vw] lg:w-[30vw] bg-white/5 backdrop-blur-xl rounded-xl flex flex-col border border-white/20 p-4 m-3">
 
       <h1 className={`text-white text-[1.65rem] text-left mb-3 ml-2 font-semibold flex gap-1.5`}>
         {

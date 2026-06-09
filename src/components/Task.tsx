@@ -1,23 +1,44 @@
 import { Calendar, Pencil, Trash } from "lucide-react"
 import type { TodoDataType } from "../type"
 import * as React from "react"
+import { TodoContext } from "../state/todo/todo-context";
+import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
+import { useUpdateTodo } from "../hooks/use-update-todo";
 
 
-const Task = ({ title, description, difficulty, priority, category, date, id }: Pick<TodoDataType, "title" | "difficulty" | "priority" | "description" | "category" | "date" | "id">) => {
+const Task = ({
+    title,
+    description,
+    difficulty,
+    priority,
+    category,
+    date,
+    id,
+}: Partial<Omit<TodoDataType, "state">>) => {
+
+    const { setSelectedTodoId } = React.useContext(TodoContext);
+    const { setIsPopUpContainerOpen, setContainerName } = React.useContext(PopUpContainerContext);
+    const { deleteTodo } = useUpdateTodo();
 
     // console.log(new Date(date).getTime())
-    date = new Date(date).toLocaleString() as unknown as Date;
-    title = title.toUpperCase();
-
-    // Handling deleting task
-    const handleDeleteTask = (e: React.MouseEvent<SVGSVGElement>) => {
-
-    }
+    date = new Date(date as Date).toLocaleString() as unknown as Date;
+    title = title!.toUpperCase();
 
     // Handling update todo
     const hanldeUpdateTodo = (e: React.MouseEvent<SVGSVGElement>) => {
         const todoId = (e.currentTarget.closest("#task")?.lastChild as HTMLElement).id;
-        console.log(todoId);
+        setSelectedTodoId(todoId);
+        setContainerName("updateTodoForm");
+        setIsPopUpContainerOpen(true);
+    }
+
+    // Handling delete todo
+    const handleDeleteTask = (e: React.MouseEvent<SVGSVGElement>) => {
+        const todoId = (e.currentTarget.closest("#task")?.lastChild as HTMLElement).id;
+        deleteTodo(todoId);
+        setTimeout(() => {
+            alert("Todo deleted successfully");
+        }, 200);
     }
 
     return (

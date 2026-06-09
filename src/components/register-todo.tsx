@@ -4,12 +4,20 @@ import { useAddTodo } from "../hooks/use-add-todo";
 import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
 import { X } from "lucide-react";
 import { useUpdateTodo } from "../hooks/use-update-todo";
+import { TodoContext } from "../state/todo/todo-context";
 
 const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean, todoId?: string }) => {
     const { addTodo } = useAddTodo();
+    const { selectedTodoId, setSelectedTodoId } = React.useContext(TodoContext);
     const { updateTodo } = useUpdateTodo();
-    const { setIsPopUpContainerOpen } = React.useContext(PopUpContainerContext);
+    const { setIsPopUpContainerOpen, setContainerName } = React.useContext(PopUpContainerContext);
 
+
+    // Handling closing form
+    const handleClosingForm = () => {
+        setContainerName(null);
+        setIsPopUpContainerOpen(false);
+    }
 
     // Handling form submission
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -20,10 +28,16 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
             alert("All fields are required. Please fill all the fields before submitting");
             return;
         }
+
+        // Off popUp container
+        setContainerName(null);
         setIsPopUpContainerOpen(false);
+
         setTimeout(() => {
             alert("Todo added successfully.");
         }, 200);
+
+        // Add todo with the given data and reset form
         addTodo(data);
         e.currentTarget.reset();
     }
@@ -33,15 +47,25 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as TodoDataType;
 
-        if (!Object.values(data).some(value => value !== "") || !data.category || !data.priority || !data.difficulty) {
+        if (!data.title && !data.description && !data.date && !data.category && !data.priority && !data.difficulty) {
             alert("There must be at least one field");
             return;
         }
+
+        // Off popUp container
+        setContainerName(null);
         setIsPopUpContainerOpen(false);
+
+
         setTimeout(() => {
             alert("Todo updated successfully.");
         }, 200);
-        updateTodo((todoId) as string, data);
+
+        // Update todo with the given data
+        updateTodo((selectedTodoId) as string, data);
+
+        // Reset selected todo id and form
+        setSelectedTodoId(null);
         e.currentTarget.reset();
     }
 
@@ -49,9 +73,9 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
     const inputClass = "w-full px-3 py-2 rounded-md border border-yellow-400/40 bg-yellow-50/30 text-yellow-900 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400";
 
     return (
-        <form onSubmit={handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
+        <form onSubmit={isUpdateForm ? handleUpdateFormSubmit : handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
             <h1 className="text-3xl font-bold">{isUpdateForm ? "Update" : "Register"} Todo</h1>
-            <X className="absolute right-4 top-4 text-red-500 cursor-pointer" onClick={() => setIsPopUpContainerOpen(false)} />
+            <X className="absolute right-4 top-4 text-red-500 cursor-pointer" onClick={handleClosingForm} />
 
             {/* Title */}
             <input className={inputClass} type="text" placeholder="title" name="title" />
