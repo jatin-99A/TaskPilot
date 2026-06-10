@@ -4,11 +4,18 @@ import type { TodoDataType } from "../type";
 import Task from "./task";
 import * as React from "react";
 
-const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => {
+const Todo = ({ container_name, isTodoFilterContainer, isDraggable = true }: { container_name: TodoDataType["state"], isTodoFilterContainer?: boolean, isDraggable: boolean }) => {
   const { todo } = React.useContext(TodoContext);
-  
+  const { filteredTodo } = React.useContext(TodoContext);
+
   // Filter todos in order of state
-  let filterTodos = todo !== null ? todo.filter(todo => todo.state === container_name) : [];
+  let filterTodos;
+
+  if (!isTodoFilterContainer) {
+    filterTodos = todo.filter(todo => todo.state === container_name);
+  } else {
+    filterTodos = filteredTodo.filter(todo => todo.state === container_name);
+  }
 
   // Handling drag over 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -57,6 +64,7 @@ const Todo = ({ container_name }: { container_name: TodoDataType["state"] }) => 
       <div id="todo-container" className="flex-1 p-1 flex flex-col gap-2 overflow-y-auto todo-container">
         {filterTodos.map((task) => (
           <Task
+            isDraggable={isDraggable}
             key={task.id}
             {...task}
           />

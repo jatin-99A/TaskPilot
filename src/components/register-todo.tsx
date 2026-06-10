@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import { useUpdateTodo } from "../hooks/use-update-todo";
 import { TodoContext } from "../state/todo/todo-context";
 
-const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean, todoId?: string }) => {
+const AddTodoForm = ({ isUpdateForm = false }: { isUpdateForm?: boolean }) => {
     const { addTodo } = useAddTodo();
     const { selectedTodoId, setSelectedTodoId } = React.useContext(TodoContext);
     const { updateTodo } = useUpdateTodo();
@@ -70,11 +70,11 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
     }
 
 
-    const inputClass = "w-full px-3 py-2 rounded-md border border-yellow-400/40 bg-yellow-50/30 text-yellow-900 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400";
+    const inputClass = "w-full px-3 py-2 rounded-md border border-slate-400/40 bg-slate-50/30 text-white/70 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-slate-400";
 
     return (
-        <form onSubmit={isUpdateForm ? handleUpdateFormSubmit : handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-white rounded-lg flex flex-col justify-center gap-5 items-center p-6">
-            <h1 className="text-3xl font-bold">{isUpdateForm ? "Update" : "Register"} Todo</h1>
+        <form onSubmit={isUpdateForm ? handleUpdateFormSubmit : handleSubmit} className="relative w-full md:w-[70vw] lg:w-[60vw] bg-transparent rounded-lg flex flex-col justify-center gap-5 items-center p-6 border border-white/10">
+            <h1 className="text-3xl font-bold text-white">{isUpdateForm ? "Update" : "Register"} Todo</h1>
             <X className="absolute right-4 top-4 text-red-500 cursor-pointer" onClick={handleClosingForm} />
 
             {/* Title */}
@@ -90,19 +90,19 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
 
                 {/* Difficulty */}
                 <div>
-                    <p className="font-semibold mb-2 text-yellow-400">Difficulty</p>
-                    <div className="flex justify-around text-yellow-400 p-2  rounded-md border border-yellow-400/40 bg-yellow-50/30 ">
-                        <label className="flex items-center gap-1">
+                    <p className="font-semibold mb-2 text-white/70">Difficulty</p>
+                    <div className="flex justify-around text-slate-400 p-2  rounded-md border border-slate-400/40 bg-slate-50/30 ">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="difficulty" value="easy" className="" />
                             Easy
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="difficulty" value="medium" className="" />
                             Medium
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="difficulty" value="hard" className="" />
                             Hard
                         </label>
@@ -111,19 +111,19 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
 
                 {/* Priority */}
                 <div>
-                    <p className="font-semibold mb-2 text-yellow-400">Priority</p>
-                    <div className="flex justify-around text-yellow-400 p-2  rounded-md border border-yellow-400/40 bg-yellow-50/30 ">
-                        <label className="flex items-center gap-1">
+                    <p className="font-semibold mb-2 text-white/70">Priority</p>
+                    <div className="flex justify-around text-slate-400 p-2  rounded-md border border-slate-400/40 bg-slate-50/30 ">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="priority" value="high" className="" />
                             High
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="priority" value="medium" className="" />
                             Medium
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="priority" value="low" className="" />
                             Low
                         </label>
@@ -132,26 +132,26 @@ const AddTodoForm = ({ isUpdateForm = false, todoId }: { isUpdateForm?: boolean,
 
                 {/* Category */}
                 <div>
-                    <p className="font-semibold mb-2 text-yellow-400">Category</p>
-                    <div className="flex justify-around text-yellow-400 p-2  rounded-md border border-yellow-400/40 bg-yellow-50/30 ">
-                        <label className="flex items-center gap-1">
+                    <p className="font-semibold mb-2 text-white/70">Category</p>
+                    <div className="flex justify-around text-slate-400 p-2  rounded-md border border-slate-400/40 bg-slate-50/30 ">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="category" value="work" className="" />
                             Work
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="category" value="personal" className="" />
                             Personal
                         </label>
 
-                        <label className="flex items-center gap-1">
+                        <label className="flex items-center gap-1 text-white/70">
                             <input type="radio" name="category" value="urgent" className="" />
                             Urgent
                         </label>
                     </div>
                 </div>
 
-                <button type="submit" className="p-2.5 bg-yellow-400 rounded-lg text-white font-bold hover:bg-yellow-300 transition-all duration-75 cursor-pointer">{isUpdateForm ? "Update" : "Add"} Todo</button>
+                <button type="submit" className="p-2.5 bg-sky-500 rounded-lg text-white font-bold hover:bg-sky-600 transition-all duration-75 cursor-pointer">{isUpdateForm ? "Update" : "Add"} Todo</button>
 
             </div>
         </form>

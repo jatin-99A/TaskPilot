@@ -34,5 +34,18 @@ export const useUpdateTodo = () => {
         registerData("todos", updatedTodo!);
     }
 
-    return { updateTodo, deleteTodo }
+    // For filter todo
+    const filterTodo = (filters: Partial<TodoDataType>): TodoDataType[] => {
+        const filteredTodo = todos?.filter(todo =>
+            (!filters.title || todo.title.includes(filters.title)) &&
+            (!filters.priority?.length || filters.priority.includes(todo.priority)) &&
+            (!filters.category?.length || filters.category.includes(todo.category)) &&
+            (!filters.difficulty?.length || filters.difficulty.includes(todo.difficulty)) &&
+            (!filters.date || todo.date === filters.date)
+        );
+
+        return filteredTodo!;
+    }
+
+    return { updateTodo, deleteTodo, filterTodo }
 }

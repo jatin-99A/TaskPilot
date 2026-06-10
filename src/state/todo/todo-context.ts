@@ -6,11 +6,15 @@ type TodoContextType = {
     setTodo: React.Dispatch<React.SetStateAction<TodoDataType[]>>;
     selectedTodoId: string | null;
     setSelectedTodoId: React.Dispatch<React.SetStateAction<string | null>>;
+    filteredTodo: Partial<TodoDataType>[];
+    setFilteredTodo: React.Dispatch<React.SetStateAction<Partial<TodoDataType>[]>>
 };
 
 export const TodoContext = React.createContext<TodoContextType>({
     todo: [],
     setTodo: () => { },
     selectedTodoId: null,
-    setSelectedTodoId: ( ) => { },
+    setSelectedTodoId: () => { },
+    filteredTodo: [],
+    setFilteredTodo: () => { },
 });

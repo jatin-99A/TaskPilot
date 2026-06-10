@@ -1,16 +1,18 @@
 import PopUpContainer from "./components/pop-up-container"
 import Todo from "./components/todo-container"
 import * as React from "react"
-import { Plus } from "lucide-react"
+import { Plus, X } from "lucide-react"
 import { useGetTodo } from "./hooks/use-get-todo"
 import { PopUpContainerContext } from "./state/pop-up-container/pop-up-container-context"
 import { useUpdateTodo } from "./hooks/use-update-todo"
 import type { TodoDataType } from "./type"
 import FilterAndSearch from "./components/filter-search"
+import { TodoContext } from "./state/todo/todo-context"
 
 
 const App = () => {
   const { setIsPopUpContainerOpen, setContainerName } = React.useContext(PopUpContainerContext);
+  const { filteredTodo, setFilteredTodo } = React.useContext(TodoContext);
   const [taskElement, setTaskElement] = React.useState<HTMLElement | null>(null);
   const { updateTodo } = useUpdateTodo();
 
@@ -57,6 +59,12 @@ const App = () => {
     }
   }
 
+  // Handling remove filters 
+  const handleRemoveFilters = () => {
+    setFilteredTodo([]);
+  }
+
+
   return (
     <div
       onDragEnd={handleDragEnd}
@@ -74,10 +82,30 @@ const App = () => {
       </div>
       <FilterAndSearch />
       <div className="w-full todo-container flex flex-col lg:flex-row items-center gap-5 lg:mt-0 lg:justify-around lg:h-[90vh]">
-        <Todo container_name="pending" />
-        <Todo container_name="in-progress" />
-        <Todo container_name="completed" />
+        <Todo isDraggable={true} container_name="pending" />
+        <Todo isDraggable={true} container_name="in-progress" />
+        <Todo isDraggable={true} container_name="completed" />
       </div>
+
+      // Filtered Todo render if its length !== 0;
+      {
+        filteredTodo.length !== 0 && (
+          <div className="absolute top-0 backdrop-blur-xl w-full min-h-full -mx-3.5">
+            <div className="ml-6 my-6 flex justify-between">
+              <h1 className="text-white text-2xl md:text-5xl">Filtered Tasks</h1>
+              <button onClick={handleRemoveFilters} className="flex text-slate-400 cursor-pointer border border-sky-400/80 p-2 md:p-4 rounded-lg mr-1 md:mr-3.5 lg:mr-6">
+                <X className="text-red-400 mr-1" />
+                Remove filters
+              </button>
+            </div>
+            <div className="h-full w-full flex flex-col items-center justify-around lg:flex-row">
+              <Todo container_name="pending" isDraggable={false} isTodoFilterContainer={true} />
+              <Todo container_name="in-progress" isDraggable={false} isTodoFilterContainer={true} />
+              <Todo container_name="completed" isDraggable={false} isTodoFilterContainer={true} />
+            </div>
+          </div>
+        )
+      }
 
       // PopUp container
       <PopUpContainer />
