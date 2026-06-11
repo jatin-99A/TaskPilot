@@ -13,14 +13,23 @@ import { ReminderContext } from "./state/reminder/reminder-context"
 
 
 const App = () => {
-  const { setIsPopUpContainerOpen, setContainerName } = React.useContext(PopUpContainerContext);
+  const { setIsPopUpContainerOpen, setContainerName, setAlarm, alarm } = React.useContext(PopUpContainerContext);
   const { filteredTodo, setFilteredTodo } = React.useContext(TodoContext);
   const [taskElement, setTaskElement] = React.useState<HTMLElement | null>(null);
   const { updateTodo } = useUpdateTodo();
   const { getAllReminders, reminderTimer } = useReminder();
   const { reminders } = React.useContext(ReminderContext);
-  const [alarm, setAlarm] = React.useState<boolean>(false);
 
+
+  // Handling alarm event
+  React.useEffect(() => {
+    if (alarm) {
+      setContainerName("alarm");
+      setIsPopUpContainerOpen(true);
+    }
+  }, [alarm])
+
+  // Load all todos from localStorage
   React.useEffect(() => {
     getAllReminders()
   }, [])
