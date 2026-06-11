@@ -5,7 +5,7 @@ import { TodoContext } from "../state/todo/todo-context";
 import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
 import { useUpdateTodo } from "../hooks/use-update-todo";
 import { ReminderContext } from "../state/reminder/reminder-context";
-import { registerData } from "../utils/utils";
+import { useReminder } from "../hooks/use-reminder";
 
 
 const Task = ({
@@ -22,12 +22,10 @@ const Task = ({
     const { setSelectedTodoId } = React.useContext(TodoContext);
     const { setIsPopUpContainerOpen, setContainerName } = React.useContext(PopUpContainerContext);
     const { deleteTodo } = useUpdateTodo();
-    const ctx = React.useContext(ReminderContext);
+    const { reminders } = React.useContext(ReminderContext);
+    const { setReminders, removeReminders } = useReminder();
 
-    if (!ctx) throw new Error("context is null");
-
-    const { reminders, setReminder, removeReminder } = ctx;
-
+    // Converting into seconds for set time in reminders
     const dateInSeconds = new Date(date as Date).getTime();
 
     date = new Date(date as Date).toLocaleString() as unknown as Date;
@@ -52,14 +50,15 @@ const Task = ({
 
     // Handling Reminder
     const handleReminder = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.checked)
-        console.log(e.target.value)
-        if (reminders.get(id!)) {
-            removeReminder(id!);
+        if (e.target.checked) {
+            if (Date.now() >= dateInSeconds) {
+                alert("You are trying to set reminder in past time");
+            } else {
+                setReminders(id!, dateInSeconds);
+            }
         } else {
-            setReminder(id!, dateInSeconds);
+            removeReminders(id!);
         }
-        console.log(reminders)
     }
 
     return (
@@ -74,7 +73,7 @@ const Task = ({
             </div>
 
             <AlarmClockCheck className="inline-block text-red-400 -mt-2 mr-1" />
-            <input onChange={handleReminder} checked={reminders.get(id!) === dateInSeconds} value={id} type="checkbox" className="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-blue-500 cursor-pointer" />
+            <input onChange={handleReminder} checked={reminders.get(id!) === dateInSeconds} type="checkbox" className="h-4 w-4 rounded border-slate-600 bg-slate-800 accent-blue-500 cursor-pointer" />
 
             <p className="text-[14px] text-black/70 mt-2 leading-6">{description}</p>
             <div>

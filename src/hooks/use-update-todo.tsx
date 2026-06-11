@@ -4,8 +4,13 @@ import { getData, registerData } from "../utils/utils";
 import * as React from "react";
 
 export const useUpdateTodo = () => {
-    const { setTodo } = React.useContext(TodoContext);
-    let todos = getData("todos");
+    const { setTodo, todo } = React.useContext(TodoContext);
+    const [todos, setTodos] = React.useState<TodoDataType[]>([]);
+
+    React.useEffect(() => {
+        const storedTodos = getData("todos") || [];
+        setTodos(storedTodos);
+    }, [todo]);
 
     // For update todo
     const updateTodo = (id: TodoDataType["id"], data: AllowedUpdateTodoValues) => {

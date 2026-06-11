@@ -6,4 +6,8 @@ type ReminderContextType = {
     removeReminder: (id: string) => void;
 };
 
-export const ReminderContext = React.createContext<ReminderContextType | null>(null);
+export const ReminderContext = React.createContext<ReminderContextType>({
+    reminders: new Map<string, number>(),
+    setReminder: (id: string) => { },
+    removeReminder: (id: string) => { },
+});

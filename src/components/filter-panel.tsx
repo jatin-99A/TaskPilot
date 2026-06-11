@@ -73,7 +73,7 @@ export default function FilterPanel({ visible, onClose, title }: FilterPanelProp
                     <div className="space-y-2">
                         {[
                             { label: "high", checked: true },
-                            { label: "medium", checked: false },
+                            { label: "moderate", checked: false },
                             { label: "low", checked: false },
                         ].map((c) => (
                             <label key={c.label} className="flex cursor-pointer items-center gap-2 text-sm text-slate-200">
@@ -95,9 +95,9 @@ export default function FilterPanel({ visible, onClose, title }: FilterPanelProp
                     <p className="mb-2 text-sm font-semibold text-slate-200">Difficulty</p>
                     <div className="space-y-2">
                         {[
-                            { label: "high", checked: true },
+                            { label: "easy", checked: true },
                             { label: "medium", checked: false },
-                            { label: "low", checked: false },
+                            { label: "hard", checked: false },
                         ].map((c) => (
                             <label key={c.label} className="flex cursor-pointer items-center gap-2 text-sm text-slate-200">
                                 <input

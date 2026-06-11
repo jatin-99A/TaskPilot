@@ -8,6 +8,8 @@ import { useUpdateTodo } from "./hooks/use-update-todo"
 import type { TodoDataType } from "./type"
 import FilterAndSearch from "./components/filter-search"
 import { TodoContext } from "./state/todo/todo-context"
+import { useReminder } from "./hooks/use-reminder"
+import { ReminderContext } from "./state/reminder/reminder-context"
 
 
 const App = () => {
@@ -15,6 +17,19 @@ const App = () => {
   const { filteredTodo, setFilteredTodo } = React.useContext(TodoContext);
   const [taskElement, setTaskElement] = React.useState<HTMLElement | null>(null);
   const { updateTodo } = useUpdateTodo();
+  const { getAllReminders, reminderTimer } = useReminder();
+  const { reminders } = React.useContext(ReminderContext);
+  const [alarm, setAlarm] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    getAllReminders()
+  }, [])
+
+  // Running timer interval if we have any reminders
+  React.useEffect(() => {
+    reminderTimer(setAlarm);
+    console.log("Alarm : ", alarm);
+  }, [reminders])
 
 
   // Fetch all the data

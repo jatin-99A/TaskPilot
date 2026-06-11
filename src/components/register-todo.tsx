@@ -29,6 +29,11 @@ const AddTodoForm = ({ isUpdateForm = false }: { isUpdateForm?: boolean }) => {
             return;
         }
 
+        if(new Date(data.date).getTime() < Date.now()){
+            alert("You are using past data and time");
+            return
+        }
+
         // Off popUp container
         setContainerName(null);
         setIsPopUpContainerOpen(false);
@@ -119,8 +124,8 @@ const AddTodoForm = ({ isUpdateForm = false }: { isUpdateForm?: boolean }) => {
                         </label>
 
                         <label className="flex items-center gap-1 text-white/70">
-                            <input type="radio" name="priority" value="medium" className="" />
-                            Medium
+                            <input type="radio" name="priority" value="moderate" className="" />
+                            Moderate
                         </label>
 
                         <label className="flex items-center gap-1 text-white/70">

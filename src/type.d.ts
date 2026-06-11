@@ -14,5 +14,5 @@ export type AllowedUpdateTodoValues = Partial<Omit<TodoDataType, "id">>;
 
 export interface Reminders {
     id: string;
-    time: string;
+    time: number;
 }
