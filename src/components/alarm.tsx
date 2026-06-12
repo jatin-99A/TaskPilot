@@ -1,20 +1,37 @@
 import { X } from "lucide-react";
 import alarmPng from "../assets/alarm.png";
+import alarmSound from "../assets/alarm-sound.mp3";
 import * as React from "react";
 import { PopUpContainerContext } from "../state/pop-up-container/pop-up-container-context";
 
 const Alarm = () => {
     const { setIsPopUpContainerOpen, setContainerName, setAlarm, alarm } = React.useContext(PopUpContainerContext);
+    const soundRef = React.useRef<HTMLAudioElement>(null);
+
+    const stopAlarm = () => {
+
+        if (soundRef.current) {
+            soundRef.current.pause();
+            soundRef.current.loop = false;
+            soundRef.current = null;
+        }
+
+        setContainerName(null);
+        setIsPopUpContainerOpen(false);
+        setAlarm(false);
+    }
+
     // Handling alarm event
     React.useEffect(() => {
         let id: number;
 
         if (alarm) {
-            id = setTimeout(() => {
-                setContainerName(null);
-                setIsPopUpContainerOpen(false);
-                setAlarm(false);
+            soundRef.current = new Audio(alarmSound);
+            soundRef.current.loop = true;
+            soundRef.current.play();
 
+            id = setTimeout(() => {
+                stopAlarm();
             }, 60000);
 
         }
@@ -23,13 +40,14 @@ const Alarm = () => {
             if (id !== undefined) {
                 clearTimeout(id);
             }
+
+            soundRef.current?.pause();
+            soundRef.current = null;
         }
     }, [alarm]);
 
     const handleAlarmTurnOff = () => {
-        setContainerName(null);
-        setIsPopUpContainerOpen(false);
-        setAlarm(false);
+        stopAlarm();
     }
 
     return (

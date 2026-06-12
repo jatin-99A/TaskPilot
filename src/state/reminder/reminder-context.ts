@@ -8,6 +8,6 @@ type ReminderContextType = {
 
 export const ReminderContext = React.createContext<ReminderContextType>({
     reminders: new Map<string, number>(),
-    setReminder: (id: string) => { },
-    removeReminder: (id: string) => { },
+    setReminder: () => { },
+    removeReminder: () => { },
 });
