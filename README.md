@@ -62,9 +62,12 @@ This project supports **multiple filtering options**, such as:
 
 2️⃣ Move into project directory
  - cd TaskPilot
+  
+3️⃣ Move into project directory
+ - cd TaskPilot
 
-4️⃣ Start development server
- - pnpm dev
+4️⃣ Install dependencies 
+ - pnpm install
 
 📦 Build for Production
 -  pnpm run build
