@@ -44,16 +44,15 @@ This project supports **multiple filtering options**, such as:
 
 ## 📁 Project Structure
 
-src/
-│
-├── components/ # Reusable UI components
-├── state/ # Global state management (Context API)
-├── hooks/ # Custom React hooks
-├── utils/ # Helper functions & logic
-├── types.d.ts # Global TypeScript type definitions
-└── App.tsx # Main application entry point
-
-
+- `src/`
+  - `components/` — Reusable UI components
+  - `state/` — Global state management (Context API)
+  - `hooks/` — Custom React hooks
+  - `utils/` — Helper functions & logic
+  - `types.d.ts` — Global TypeScript type definitions
+  - `App.tsx` — Main application entry point
+  
+  
 ---
 
 ## ⚙️ Getting Started
