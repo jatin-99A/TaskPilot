@@ -7,7 +7,6 @@ import { useUpdateTodo } from "../hooks/use-update-todo";
 import { ReminderContext } from "../state/reminder/reminder-context";
 import { useReminder } from "../hooks/use-reminder";
 
-
 const Task = ({
     title,
     description,

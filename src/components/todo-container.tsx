@@ -1,7 +1,7 @@
 import { CircleDot, LayoutList, SquareCheckBig } from "lucide-react";
 import { TodoContext } from "../state/todo/todo-context";
 import type { TodoDataType } from "../type";
-import Task from "./task";
+import Task from "./todo";
 import * as React from "react";
 
 const Todo = ({ container_name, isTodoFilterContainer, isDraggable = true }: { container_name: TodoDataType["state"], isTodoFilterContainer?: boolean, isDraggable: boolean }) => {
