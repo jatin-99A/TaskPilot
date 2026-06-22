@@ -1,4 +1,4 @@
-# 📝 Todo App (React + TypeScript + Tailwind CSS)
+# 📝 Task Management App (React + TypeScript + Tailwind CSS)
 
 A modern and scalable **Todo Application** built with **React, TypeScript, Context API, Tailwind CSS**, and **LocalStorage**.  
 It is designed with a modular architecture using reusable components, custom hooks, and strongly typed TypeScript definitions.
@@ -8,10 +8,10 @@ It is designed with a modular architecture using reusable components, custom hoo
 ## 🚀 Features
 
 ### ✅ Task Management
-- ➕ Add new todos
-- ❌ Delete todos
-- ✏️ Edit / update todos
-- 📌 Toggle todo status (custom states supported)
+- ➕ Add new tasks
+- ❌ Delete tasks
+- ✏️ Edit / update tasks
+- 📌 Toggle tasks status (custom states supported)
 
 ### 🔍 Advanced Filtering System
 This project supports **multiple filtering options**, such as:
